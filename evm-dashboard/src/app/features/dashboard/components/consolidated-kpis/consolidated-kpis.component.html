@@ -1,0 +1,49 @@
+<section class="kpi-grid" aria-label="Indicadores consolidados del proyecto">
+  <article class="kpi-card">
+    <span class="kpi-label">PV</span>
+    <strong>{{ metrics().pv | number: '1.0-0' }}</strong>
+    <small>Valor planificado</small>
+  </article>
+
+  <article class="kpi-card">
+    <span class="kpi-label">EV</span>
+    <strong>{{ metrics().ev | number: '1.0-0' }}</strong>
+    <small>Valor ganado</small>
+  </article>
+
+  <article class="kpi-card">
+    <span class="kpi-label">AC</span>
+    <strong>{{ metrics().ac | number: '1.0-0' }}</strong>
+    <small>Costo real</small>
+  </article>
+
+  <article class="kpi-card">
+    <span class="kpi-label">CV</span>
+    <strong [class.negative]="metrics().cv < 0" [class.positive]="metrics().cv >= 0">
+      {{ metrics().cv | number: '1.0-0' }}
+    </strong>
+    <small>Variación de costo</small>
+  </article>
+
+  <article class="kpi-card">
+    <span class="kpi-label">SV</span>
+    <strong [class.negative]="metrics().sv < 0" [class.positive]="metrics().sv >= 0">
+      {{ metrics().sv | number: '1.0-0' }}
+    </strong>
+    <small>Variación de cronograma</small>
+  </article>
+
+  <article class="kpi-card">
+    <span class="kpi-label">EAC</span>
+    <strong>{{ metrics().eac | number: '1.0-0' }}</strong>
+    <small>Estimado al terminar</small>
+  </article>
+
+  <article class="kpi-card">
+    <span class="kpi-label">VAC</span>
+    <strong [class.negative]="metrics().vac < 0" [class.positive]="metrics().vac >= 0">
+      {{ metrics().vac | number: '1.0-0' }}
+    </strong>
+    <small>Variación al terminar</small>
+  </article>
+</section>
