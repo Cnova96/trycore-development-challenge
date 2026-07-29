@@ -18,7 +18,8 @@ export class ActivityMapper {
       activity.startDate,
 
       activity.endDate,
-
+      new Date(),
+      new Date(),
       activity.projectId,
     );
   }

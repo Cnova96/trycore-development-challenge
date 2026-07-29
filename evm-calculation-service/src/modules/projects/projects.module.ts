@@ -21,5 +21,6 @@ import { GetProjectsUseCase } from './application/use-cases/get-projects.use-cas
       useClass: PrismaProjectRepository,
     },
   ],
+  exports: ['ProjectRepository'],
 })
 export class ProjectModule {}

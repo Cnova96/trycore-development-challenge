@@ -15,6 +15,8 @@ export class Activity {
     public startDate: Date,
 
     public endDate: Date,
+    public createdAt: Date,
+    public updatedAt: Date,
 
     public projectId: string,
   ) {}
