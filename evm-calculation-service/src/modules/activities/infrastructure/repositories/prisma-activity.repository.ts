@@ -1,45 +1,41 @@
-import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/config/prisma/prisma.service';
 import { ActivityRepository } from '../../application/interfaces/activity.repository';
+import { ActivityPersistenceMapper } from '../mappers/activity-persistence.mapper';
 import { Activity } from '../../domain/entities/activity.entity';
-import { ActivityMapper } from '../mappers/activity.mapper';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class PrismaActivityRepository implements ActivityRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(activity: Activity): Promise<Activity> {
-    const result = await this.prisma.activity.create({
-      data: {
-        name: activity.name,
+  async create(activity: Activity) {
+    const created = await this.prisma.activity.create({
+      data: ActivityPersistenceMapper.toPersistence(activity),
+    });
 
-        bac: activity.bac,
+    return ActivityPersistenceMapper.toDomain(created);
+  }
 
-        plannedPercent: activity.plannedPercent,
-
-        executedPercent: activity.executedPercent,
-
-        actualCost: activity.actualCost,
-
-        startDate: activity.startDate,
-
-        endDate: activity.endDate,
-
-        projectId: activity.projectId,
+  async findAll() {
+    const result = await this.prisma.activity.findMany({
+      orderBy: {
+        createdAt: 'desc',
       },
     });
 
-    return ActivityMapper.toDomain(result);
+    return result.map(ActivityPersistenceMapper.toDomain);
   }
 
   async findById(id: string) {
     const activity = await this.prisma.activity.findUnique({
-      where: { id },
+      where: {
+        id,
+      },
     });
 
     if (!activity) return null;
 
-    return ActivityMapper.toDomain(activity);
+    return ActivityPersistenceMapper.toDomain(activity);
   }
 
   async findByProject(projectId: string) {
@@ -47,8 +43,48 @@ export class PrismaActivityRepository implements ActivityRepository {
       where: {
         projectId,
       },
+      orderBy: {
+        startDate: 'asc',
+      },
     });
 
-    return result.map(ActivityMapper.toDomain);
+    return result.map(ActivityPersistenceMapper.toDomain);
+  }
+
+  async update(activity: Activity) {
+    const updated = await this.prisma.activity.update({
+      where: {
+        id: activity.id,
+      },
+      data: {
+        name: activity.name,
+        bac: activity.bac,
+        plannedPercent: activity.plannedPercent,
+        executedPercent: activity.executedPercent,
+        actualCost: activity.actualCost,
+        startDate: activity.startDate,
+        endDate: activity.endDate,
+      },
+    });
+
+    return ActivityPersistenceMapper.toDomain(updated);
+  }
+
+  async delete(id: string) {
+    await this.prisma.activity.delete({
+      where: {
+        id,
+      },
+    });
+  }
+
+  async exists(id: string) {
+    const count = await this.prisma.activity.count({
+      where: {
+        id,
+      },
+    });
+
+    return count > 0;
   }
 }
