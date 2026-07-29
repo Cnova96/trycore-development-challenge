@@ -63,12 +63,12 @@ El script `db:init` ejecuta, en orden:
 
 Comandos disponibles por separado:
 
-| Comando | Descripción |
-|---------|-------------|
-| `npm run db:init` | Migraciones + seed (inicialización completa) |
-| `npm run db:migrate` | Solo aplicar migraciones |
-| `npm run db:seed` | Solo cargar datos de ejemplo |
-| `npm run db:generate` | Regenerar el cliente Prisma |
+| Comando               | Descripción                                  |
+| --------------------- | -------------------------------------------- |
+| `npm run db:init`     | Migraciones + seed (inicialización completa) |
+| `npm run db:migrate`  | Solo aplicar migraciones                     |
+| `npm run db:seed`     | Solo cargar datos de ejemplo                 |
+| `npm run db:generate` | Regenerar el cliente Prisma                  |
 
 Para desarrollo, si modificas el schema, puedes crear una nueva migración con:
 
@@ -105,14 +105,14 @@ El proxy de desarrollo redirige las peticiones `/api` al backend en el puerto 30
 
 ## Endpoints principales
 
-| Método | Ruta | Descripción |
-|--------|------|-------------|
-| GET | `/api/projects` | Listar proyectos |
-| GET | `/api/projects/:id/evm-analysis` | Análisis EVM del proyecto |
-| GET | `/api/projects/:id/activities` | Actividades de un proyecto |
-| POST | `/api/activities` | Crear actividad |
-| PATCH | `/api/activities/:id` | Actualizar actividad |
-| POST | `/api/evm/calculate` | Calcular indicadores EVM |
+| Método | Ruta                             | Descripción                |
+| ------ | -------------------------------- | -------------------------- |
+| GET    | `/api/projects`                  | Listar proyectos           |
+| GET    | `/api/projects/:id/evm-analysis` | Análisis EVM del proyecto  |
+| GET    | `/api/projects/:id/activities`   | Actividades de un proyecto |
+| POST   | `/api/activities`                | Crear actividad            |
+| PATCH  | `/api/activities/:id`            | Actualizar actividad       |
+| POST   | `/api/evm/calculate`             | Calcular indicadores EVM   |
 
 Consulta la documentación completa en Swagger.
 
@@ -121,7 +121,9 @@ Consulta la documentación completa en Swagger.
 ```bash
 # Backend
 cd evm-calculation-service
-npm test
+npm test           # 17 unitarias
+npm run test:cov   # con cobertura
+npm run test:e2e   # 13 integración
 
 # Frontend
 cd evm-dashboard
@@ -130,12 +132,12 @@ npm test
 
 ## Stack tecnológico
 
-| Capa | Tecnología |
-|------|------------|
-| Backend | NestJS, TypeScript |
-| Base de datos | PostgreSQL, Prisma ORM |
-| Frontend | Angular 19, Chart.js |
-| Documentación API | OpenAPI / Swagger |
+| Capa              | Tecnología             |
+| ----------------- | ---------------------- |
+| Backend           | NestJS, TypeScript     |
+| Base de datos     | PostgreSQL, Prisma ORM |
+| Frontend          | Angular 19, Chart.js   |
+| Documentación API | OpenAPI / Swagger      |
 
 ## Notas
 
