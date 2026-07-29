@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Project {
+  id          String     @id @default(uuid())
+  name        String
+  description String?
+
+  activities  Activity[]
+
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model Activity {
+  id              String    @id @default(uuid())
+
+  name            String
+
+  bac             Decimal   @db.Decimal(12,2)
+  plannedPercent  Decimal   @db.Decimal(5,2)
+  executedPercent Decimal   @db.Decimal(5,2)
+  actualCost      Decimal   @db.Decimal(12,2)
+
+  startDate       DateTime
+  endDate         DateTime
+
+  projectId       String
+  project         Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
