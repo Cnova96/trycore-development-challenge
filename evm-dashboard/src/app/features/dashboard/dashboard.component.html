@@ -1,0 +1,56 @@
+<main class="dashboard">
+  <header class="dashboard-header">
+    <div>
+      <h1>Dashboard EVM</h1>
+      <p>Análisis en tiempo real del valor ganado del proyecto.</p>
+    </div>
+
+    @if (projects().length > 0) {
+      <label class="project-selector">
+        <span>Proyecto</span>
+        <select
+          [ngModel]="selectedProjectId()"
+          (ngModelChange)="onProjectChange($event)"
+        >
+          @for (project of projects(); track project.id) {
+            <option [value]="project.id">{{ project.name }}</option>
+          }
+        </select>
+      </label>
+    }
+  </header>
+
+  @if (loading()) {
+    <p class="feedback">Cargando información...</p>
+  }
+
+  @if (error()) {
+    <p class="feedback error">{{ error() }}</p>
+  }
+
+  @if (!loading() && selectedProject()) {
+    <section class="overview-grid">
+      <app-cpi-spi-indicators [metrics]="consolidatedMetrics()" />
+      <app-consolidated-kpis [metrics]="consolidatedMetrics()" />
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <h2>Actividades</h2>
+        <button type="button" (click)="onAddActivity()">+ Nueva actividad</button>
+      </div>
+
+      <app-activity-table
+        [activityMetrics]="activityMetrics()"
+        [savingActivityId]="savingActivityId()"
+        (activityChanged)="onActivityChanged($event)"
+        (activitySaved)="onActivitySaved($event)"
+        (activityDeleted)="onActivityDeleted($event)"
+      />
+    </section>
+
+    <section class="panel">
+      <app-evm-chart [activityMetrics]="activityMetrics()" />
+    </section>
+  }
+</main>

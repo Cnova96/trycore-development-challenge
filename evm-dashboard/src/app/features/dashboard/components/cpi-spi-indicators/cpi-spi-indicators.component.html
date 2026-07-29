@@ -1,0 +1,20 @@
+<section class="status-panel" [attr.data-status]="overallStatus()" aria-live="polite">
+  <header>
+    <h2>Estado del proyecto</h2>
+    <span class="overall-badge">{{ overallLabel() }}</span>
+  </header>
+
+  <div class="index-grid">
+    <article class="index-card" [attr.data-status]="cpiStatus()">
+      <span>CPI</span>
+      <strong>{{ metrics().cpi | number: '1.2-2' }}</strong>
+      <small>Costo: &gt;= 1.00 saludable</small>
+    </article>
+
+    <article class="index-card" [attr.data-status]="spiStatus()">
+      <span>SPI</span>
+      <strong>{{ metrics().spi | number: '1.2-2' }}</strong>
+      <small>Tiempo: &gt;= 1.00 saludable</small>
+    </article>
+  </div>
+</section>
