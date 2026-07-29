@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 
 import { ActivityController } from './activity.controller';
+import { ProjectActivitiesController } from './project-activities.controller';
 
 import { PrismaActivityRepository } from './infrastructure/repositories/prisma-activity.repository';
 import { ProjectModule } from '../projects/projects.module';
@@ -15,7 +16,7 @@ import { ACTIVITY_REPOSITORY } from './infrastructure/repositories/activity.toke
 @Module({
   imports: [ProjectModule],
 
-  controllers: [ActivityController],
+  controllers: [ActivityController, ProjectActivitiesController],
 
   providers: [
     CreateActivityUseCase,
@@ -34,6 +35,7 @@ import { ACTIVITY_REPOSITORY } from './infrastructure/repositories/activity.toke
       provide: ACTIVITY_REPOSITORY,
       useClass: PrismaActivityRepository,
     },
+    GetProjectActivitiesUseCase,
   ],
 })
 export class ActivityModule {}
