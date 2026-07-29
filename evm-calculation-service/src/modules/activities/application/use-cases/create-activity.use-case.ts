@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { CreateActivityDto } from '../create-activity.dto';
+import { CreateActivityDto } from '../dto/create-activity.dto';
 import { Activity } from '../../domain/entities/activity.entity';
 import { PrismaActivityRepository } from '../../infrastructure/repositories/prisma-activity.repository';
 
