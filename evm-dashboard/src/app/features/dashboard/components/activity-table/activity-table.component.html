@@ -1,0 +1,94 @@
+<div class="table-wrapper">
+  <table>
+    <thead>
+      <tr>
+        <th>Actividad</th>
+        <th>BAC</th>
+        <th>% Planificado</th>
+        <th>% Ejecutado</th>
+        <th>AC</th>
+        <th>PV</th>
+        <th>EV</th>
+        <th>CPI</th>
+        <th>SPI</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of activityMetrics(); track item.activity.id) {
+        <tr>
+          <td>
+            <input
+              type="text"
+              [ngModel]="item.activity.name"
+              (ngModelChange)="onFieldChange(item.activity.id!, 'name', $event)"
+              aria-label="Nombre de actividad"
+            />
+          </td>
+          <td>
+            <input
+              type="number"
+              min="0"
+              [ngModel]="item.activity.bac"
+              (ngModelChange)="onFieldChange(item.activity.id!, 'bac', +$event)"
+              aria-label="BAC"
+            />
+          </td>
+          <td>
+            <input
+              type="number"
+              min="0"
+              max="100"
+              [ngModel]="item.activity.plannedPercent"
+              (ngModelChange)="onFieldChange(item.activity.id!, 'plannedPercent', +$event)"
+              aria-label="Porcentaje planificado"
+            />
+          </td>
+          <td>
+            <input
+              type="number"
+              min="0"
+              max="100"
+              [ngModel]="item.activity.executedPercent"
+              (ngModelChange)="onFieldChange(item.activity.id!, 'executedPercent', +$event)"
+              aria-label="Porcentaje ejecutado"
+            />
+          </td>
+          <td>
+            <input
+              type="number"
+              min="0"
+              [ngModel]="item.activity.actualCost"
+              (ngModelChange)="onFieldChange(item.activity.id!, 'actualCost', +$event)"
+              aria-label="Costo real"
+            />
+          </td>
+          <td>{{ item.evm.pv | number: '1.0-0' }}</td>
+          <td>{{ item.evm.ev | number: '1.0-0' }}</td>
+          <td [class.negative]="item.evm.cpi < 1" [class.positive]="item.evm.cpi >= 1">
+            {{ item.evm.cpi | number: '1.2-2' }}
+          </td>
+          <td [class.negative]="item.evm.spi < 1" [class.positive]="item.evm.spi >= 1">
+            {{ item.evm.spi | number: '1.2-2' }}
+          </td>
+          <td class="actions">
+            <button
+              type="button"
+              (click)="onSave(item.activity.id!)"
+              [disabled]="savingActivityId() === item.activity.id"
+            >
+              {{ savingActivityId() === item.activity.id ? 'Guardando...' : 'Guardar' }}
+            </button>
+            <button type="button" class="danger" (click)="onDelete(item.activity.id!)">
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="10" class="empty">No hay actividades. Agrega una para comenzar.</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
